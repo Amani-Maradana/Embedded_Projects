@@ -1,0 +1,37 @@
+// C++ code
+//
+int gas_sensor=0;
+int const gas_sensorpin=A5;
+const int threshold=400;
+int red_led=2;
+int white_led=3;
+int buzzer=4;
+
+void setup()
+{
+  Serial.begin(9600);
+  pinMode(red_led, OUTPUT);
+  pinMode(white_led, OUTPUT);
+  pinMode(buzzer, OUTPUT);
+}
+
+void loop()
+{
+  gas_sensor = analogRead(gas_sensorpin);
+  Serial.print("Gas sensor Reading: ");
+  Serial.println(gas_sensor);
+  
+  if (gas_sensor > threshold)
+  {
+    digitalWrite(red_led,LOW);
+    digitalWrite(white_led,HIGH);
+    tone(buzzer,200,500);  
+  }
+  else
+  {
+    digitalWrite(red_led,HIGH);
+    digitalWrite(white_led,LOW);
+    noTone(buzzer);
+  }
+  delay(100);
+}

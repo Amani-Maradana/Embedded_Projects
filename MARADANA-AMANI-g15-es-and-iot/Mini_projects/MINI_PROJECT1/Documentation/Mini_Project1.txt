@@ -1,0 +1,84 @@
+//this is the code for automated tool gate system 
+#include <Servo.h>
+#include <LiquidCrystal.h>
+
+const int trigPin = 6;
+const int echoPin = 7;
+
+Servo myServo1;
+Servo myServo2;
+
+
+LiquidCrystal LCD(12, 11, 5, 4, 3, 2);
+
+const int redled = A1;
+const int greenled = A0;
+
+void setup() {
+  Serial.begin(9600);
+
+  pinMode(trigPin, OUTPUT);
+  pinMode(echoPin, INPUT);
+
+  myServo1.attach(8);
+  myServo1.write(90);
+  myServo2.attach(9);
+  myServo2.write(90);
+
+
+  LCD.begin(16, 2);
+  LCD.setCursor(0, 0);
+  LCD.print("  !!WELCOME!!");
+  LCD.setCursor(0, 1);
+  LCD.print("  GATES CLOSED");
+  
+  
+  pinMode(redled, OUTPUT);
+  pinMode(greenled, OUTPUT);
+  digitalWrite(redled, HIGH); 
+  digitalWrite(greenled, LOW);
+  
+}
+
+void loop() {
+  digitalWrite(trigPin, LOW);
+  delayMicroseconds(2);
+  digitalWrite(trigPin, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(trigPin, LOW);
+
+  long duration = pulseIn(echoPin, HIGH, 30000); 
+  int distance = duration * 0.034 / 2;
+
+  Serial.print("Distance: ");
+  Serial.print(distance);
+  Serial.println(" cm");
+
+  if (distance > 20 && distance <= 310) {
+    myServo1.write(180);
+    myServo2.write(0);
+    LCD.clear();
+    LCD.setCursor(1, 0);
+    LCD.print("    HAVE A");
+    LCD.setCursor(0, 1);
+    LCD.print("  SAFE JOURNEY  ");
+    digitalWrite(greenled, HIGH);
+    digitalWrite(redled, LOW); 
+
+    
+  } 
+  else {
+    myServo1.write(90);
+    myServo2.write(90);
+    LCD.clear();
+    LCD.setCursor(0, 0);
+    LCD.print("  PLEASE WAIT");
+    LCD.setCursor(0, 1);
+    LCD.print("GATES ARE CLOSED ");
+    digitalWrite(redled, HIGH);
+    digitalWrite(greenled, LOW);
+  }
+    
+
+  delay(500); 
+}

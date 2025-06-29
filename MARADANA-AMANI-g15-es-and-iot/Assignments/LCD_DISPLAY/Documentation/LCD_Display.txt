@@ -1,0 +1,47 @@
+//code for LCD Display
+#include<LiquidCrystal.h>
+LiquidCrystal LCD(9,8,4,5,6,7);
+void setup()
+{
+  LCD.begin(16,2);
+  LCD.home();
+  LCD.print(" ");
+
+  
+}
+void loop()
+{
+  LCD.display();
+  LCD.blink();
+  LCD.cursor();
+  LCD.setCursor(7,0);
+  
+  LCD.setCursor(7,0);
+  LCD.print(" Hello!!!");
+  LCD.setCursor(0,1);
+  LCD.print(" I am Amani");
+  delay(1000);
+    LCD.clear();
+
+  LCD.setCursor(6,0);
+  LCD.print(" Hello!!!");
+   LCD.setCursor(1,1);
+  LCD.print(" I am Amani");
+  delay(1000);
+    LCD.clear();
+
+  LCD.setCursor(5,0);
+  LCD.print(" Hello!!!");
+   LCD.setCursor(2,1);
+  LCD.print(" I am Amani");
+  delay(1000);
+    LCD.clear();
+
+  LCD.setCursor(4,0);
+  LCD.print(" Hello!!!");
+   LCD.setCursor(3,1);
+  LCD.print(" I am Amani");
+  delay(3000);
+  LCD.clear();
+
+}
